@@ -11,31 +11,29 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
-class adapterRecView(private val listWayang: ArrayList<wayang>) :
-    RecyclerView.Adapter<adapterRecView.ListViewHolder>() {
+class adapterRecView (private val listWayang: ArrayList<wayang>) : RecyclerView.Adapter<adapterRecView.ListViewHolder>(){
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: wayang)
-        fun delData(pos: Int)
+        fun onItemClicked(data:wayang)
+        fun delData(pos :Int)
     }
-
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
         this.onItemClickCallback = onItemClickCallback
     }
 
-    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class  ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var _namaWayang = itemView.findViewById<TextView>(R.id.namaWayang)
         var _karakterWayang = itemView.findViewById<TextView>(R.id.karakterWayang)
-        var _deskripsiWayang = itemView.findViewById<TextView>(R.id.deksripsiWayang)
+        var _deskripsiWayang = itemView.findViewById<TextView>(R.id.deskripsiWayang)
         var _gambarWayang = itemView.findViewById<ImageView>(R.id.gambarWayang)
         var _btnHapus = itemView.findViewById<Button>(R.id.btnHapus)
     }
 
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_recycler, parent, false)
+        val view:View = LayoutInflater.from(parent.context).inflate(R.layout.item_recycler,parent,false)
         return ListViewHolder(view)
     }
 
@@ -47,17 +45,17 @@ class adapterRecView(private val listWayang: ArrayList<wayang>) :
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         var wayang = listWayang[position]
 
-        holder._namaWayang.setText(wayang.name)
-        holder._deskripsiWayang.setText(wayang.deksripsi)
+        holder._namaWayang.setText(wayang.nama)
+        holder._deskripsiWayang.setText(wayang.deskripsi)
         holder._karakterWayang.setText(wayang.karakter)
-        Log.d("TEST", wayang.foto)
+        Log.d("TEST",wayang.foto)
         Picasso.get().load(wayang.foto).into(holder._gambarWayang)
 
-        holder._gambarWayang.setOnClickListener {
-//            Toast.makeText(holder.itemView.context,wayang.name,Toast.LENGTH_LONG).show()
+        holder._gambarWayang.setOnClickListener{
+//            Toast.makeText(holder.itemView.context,wayang.nama,Toast.LENGTH_LONG).show()
             onItemClickCallback.onItemClicked(listWayang[position])
         }
-        holder._btnHapus.setOnClickListener {
+        holder._btnHapus.setOnClickListener{
             onItemClickCallback.delData(position)
         }
 

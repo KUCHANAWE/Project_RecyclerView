@@ -11,13 +11,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.parcelize.Parcelize
-
 @Parcelize
 data class wayang(
-    var foto: String,
-    var name: String,
-    var karakter: String,
-    var deksripsi: String
-): Parcelable
-
-
+    var foto:String,
+    var nama:String,
+    var karakter : String,
+    var deskripsi : String
+):Parcelable

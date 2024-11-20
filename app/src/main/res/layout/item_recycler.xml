@@ -4,33 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
+    android:padding="8dp">
 
     <ImageView
-        android:layout_width="122dp"
-        android:layout_height="90dp"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="0dp"
+        android:id="@+id/gambarWayang"
+        android:layout_width="124dp"
+        android:layout_height="169dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/karakterWayang"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
+        android:id="@+id/namaWayang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="8dp"
         android:text="namaWayang"
+        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/karakterWayang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="karakterWayang"
+        android:textColor="#009688"
+        app:layout_constraintStart_toStartOf="@+id/namaWayang"
+        app:layout_constraintTop_toBottomOf="@+id/namaWayang" />
+
+    <TextView
+        android:id="@+id/deskripsiWayang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="deskripsiWayang"
+        android:textColor="#767272"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/namaWayang"
+        app:layout_constraintTop_toBottomOf="@+id/karakterWayang" />
+
+    <Button
+        android:id="@+id/btnHapus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="karakterWayang"
-        android:textColor="#029A84"
+        android:text="HAPUS DATA"
+        app:layout_constraintEnd_toEndOf="@+id/deskripsiWayang"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/deskripsiWayang"
+        app:layout_constraintTop_toBottomOf="@+id/deskripsiWayang" />
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="deksripsiWayang"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

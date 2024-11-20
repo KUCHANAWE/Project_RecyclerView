@@ -16,18 +16,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var sp : SharedPreferences
-    private var _nama: MutableList<String> = emptyList<String>().toMutableList()
-    private var _karakter: MutableList<String> = emptyList<String>().toMutableList()
-    private var _deskripsi: MutableList<String> = emptyList<String>().toMutableList()
-    private var _gambar: MutableList<String> = emptyList<String>().toMutableList()
+    private lateinit var _nama: MutableList<String>
+    private lateinit var _karakter: MutableList<String>
+    private lateinit var _deskripsi: MutableList<String>
+    private lateinit var _gambar: MutableList<String>
     private lateinit var _rvWayang: RecyclerView
 
-    private var arWayang = arrayListOf<wayang>()
+    private var arWayag = arrayListOf<wayang>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,25 +36,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        sp = getSharedPreferences("dataSP", MODE_PRIVATE)
-
-        val gson = Gson()
-        val isiSP = sp.getString("spWayang", null)
-        val type = object : TypeToken<ArrayList<wayang>>(){}.type
-        if (isiSP!=null)
-            arWayang = gson.fromJson(isiSP, type)
-
-
         _rvWayang = findViewById<RecyclerView>(R.id.rvWayang)
-        if (arWayang.size == 0){
-            SiapkanData()
-        } else {
-            arWayang.forEach {
-                _gambar.add(it.foto)
-                _deskripsi.add(it.deksripsi)
-                _karakter.add(it.karakter)
-            }
-        }
+        SiapkanData()
         TambahData()
         TampilkanData()
 
@@ -71,22 +51,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun TambahData() {
-        arWayang.clear()
-        val gson = Gson()
-        val editor = sp.edit()
-        arWayang.clear()
-        for (position in _nama.indices){
-            val data= wayang(
-                _gambar[position],
-                _nama[position],
-                _karakter[position],
-                _deskripsi[position],
+        arWayag.clear()
+        for (posititon in _nama.indices) {
+            val data = wayang(
+                _gambar[posititon],
+                _nama[posititon],
+                _karakter[posititon],
+                _deskripsi[posititon]
             )
-            arWayang.add(data)
+            arWayag.add(data)
         }
-        val json = gson.toJson(arWayang)
-        editor.putString("spWayang", json)
-        editor.apply()
     }
 
     fun TampilkanData() {
@@ -96,12 +70,12 @@ class MainActivity : AppCompatActivity() {
 //        _rvWayang.adapter = adapterRecView(arWayag)
 
         // adapter wayang
-        val adapterWayang = adapterRecView(arWayang)
+        val adapterWayang = adapterRecView(arWayag)
         _rvWayang.adapter = adapterWayang
 
         adapterWayang.setOnItemClickCallback(object : adapterRecView.OnItemClickCallback {
             override fun onItemClicked(data: wayang) {
-                Toast.makeText(this@MainActivity, data.name, Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, data.nama, Toast.LENGTH_LONG).show()
                 val intent = Intent(this@MainActivity,detWayang::class.java)
                 intent.putExtra("kirimData", data)
                 startActivity(intent)
@@ -122,13 +96,10 @@ class MainActivity : AppCompatActivity() {
                         }
                     )
                     .setNegativeButton(
-                        "BATAL",
-                        DialogInterface.OnClickListener{ dialog, which ->
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Data Batal Dihapus",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        "BATAL", DialogInterface.OnClickListener{
+                                dialog, which ->
+                            Toast.makeText(this@MainActivity, "Data Batal Dihapus", Toast.LENGTH_LONG)
+                                .show()
                         }
                     ).show()
             }

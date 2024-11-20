@@ -26,8 +26,8 @@ class detWayang : AppCompatActivity() {
         val dataIntent = intent.getParcelableExtra("kirimData",wayang::class.java)
         if (dataIntent != null){
             Picasso.get().load(dataIntent.foto).into(_ivFoto)
-            _tvNama.setText(dataIntent.name)
-            _tvDetail.setText(dataIntent.deksripsi)
+            _tvNama.setText(dataIntent.nama)
+            _tvDetail.setText(dataIntent.deskripsi)
         }
     }
 }
