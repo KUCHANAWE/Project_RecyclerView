@@ -15,7 +15,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.47"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
@@ -25,8 +25,8 @@
         android:layout_marginStart="132dp"
         android:layout_marginTop="8dp"
         android:text="namaWayang"
-        android:textStyle="bold"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,8 +57,8 @@
 
     <Button
         android:id="@+id/btnHapus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="254dp"
+        android:layout_height="46dp"
         android:layout_marginTop="8dp"
         android:text="HAPUS DATA"
         app:layout_constraintEnd_toEndOf="@+id/deskripsiWayang"
