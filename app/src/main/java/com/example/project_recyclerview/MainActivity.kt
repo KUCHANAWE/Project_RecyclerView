@@ -16,18 +16,22 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
+import com.google.gson.Gson
+import java.net.Proxy.Type
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var _nama: MutableList<String>
-    private lateinit var _karakter: MutableList<String>
-    private lateinit var _deskripsi: MutableList<String>
-    private lateinit var _gambar: MutableList<String>
+    private var _nama: MutableList<String> = emptyList<String>().toMutableList()
+    private var _karakter: MutableList<String> = emptyList<String>().toMutableList()
+    private var _deskripsi: MutableList<String> = emptyList<String>().toMutableList()
+    private var _gambar: MutableList<String> = emptyList<String>().toMutableList()
     private lateinit var _rvWayang: RecyclerView
-
-    private var arWayag = arrayListOf<wayang>()
+    lateinit var sp : SharedPreferences
+    private var arWayang = arrayListOf<wayang>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sp = getSharedPreferences("dataSP", MODE_PRIVATE)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -36,8 +40,24 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val gson = Gson()
+        val isiSP = sp.getString("spWayang",null)
+        val type = object : TypeToken<ArrayList<wayang>>(){}.type
+        if (isiSP!=null)
+            arWayang = gson.fromJson(isiSP, type)
+
+
         _rvWayang = findViewById<RecyclerView>(R.id.rvWayang)
-        SiapkanData()
+        if(arWayang.size==0){
+            SiapkanData()
+        } else{
+            arWayang.forEach{
+                _nama.add(it.nama)
+                _gambar.add(it.foto)
+                _deskripsi.add(it.deskripsi)
+                _karakter.add(it.karakter)
+            }
+        }
         TambahData()
         TampilkanData()
 
@@ -51,7 +71,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun TambahData() {
-        arWayag.clear()
+        val gson = Gson()
+        val editor = sp.edit()
+        arWayang.clear()
         for (posititon in _nama.indices) {
             val data = wayang(
                 _gambar[posititon],
@@ -59,8 +81,11 @@ class MainActivity : AppCompatActivity() {
                 _karakter[posititon],
                 _deskripsi[posititon]
             )
-            arWayag.add(data)
+            arWayang.add(data)
         }
+        val json = gson.toJson(arWayang)
+        editor.putString("spWayang",json)
+        editor.apply()
     }
 
     fun TampilkanData() {
@@ -70,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 //        _rvWayang.adapter = adapterRecView(arWayag)
 
         // adapter wayang
-        val adapterWayang = adapterRecView(arWayag)
+        val adapterWayang = adapterRecView(arWayang)
         _rvWayang.adapter = adapterWayang
 
         adapterWayang.setOnItemClickCallback(object : adapterRecView.OnItemClickCallback {
