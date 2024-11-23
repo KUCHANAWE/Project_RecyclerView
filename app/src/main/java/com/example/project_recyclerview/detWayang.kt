@@ -23,7 +23,7 @@ class detWayang : AppCompatActivity() {
         val _tvNama = findViewById<TextView>(R.id.tvNama)
         val _tvDetail = findViewById<TextView>(R.id.tvDetail)
 
-        val dataIntent = intent.getParcelableExtra("kirimData",wayang::class.java)
+        val dataIntent = intent.getParcelableExtra("kirimData",Wayang::class.java)
         if (dataIntent != null){
             Picasso.get().load(dataIntent.foto).into(_ivFoto)
             _tvNama.setText(dataIntent.nama)

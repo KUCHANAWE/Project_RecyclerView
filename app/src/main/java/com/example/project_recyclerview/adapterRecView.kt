@@ -7,15 +7,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
-class adapterRecView (private val listWayang: ArrayList<wayang>) : RecyclerView.Adapter<adapterRecView.ListViewHolder>(){
+class adapterRecView (private val listWayang: ArrayList<Wayang>) : RecyclerView.Adapter<adapterRecView.ListViewHolder>(){
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(data:wayang)
+        fun onItemClicked(data:Wayang)
         fun delData(pos :Int)
     }
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
